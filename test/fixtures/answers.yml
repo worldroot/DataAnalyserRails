@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  description: MyText
+  astre_points: 1
+  ips_points: 1
+  student: one
+
+two:
+  description: MyText
+  astre_points: 1
+  ips_points: 1
+  student: two

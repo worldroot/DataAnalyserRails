@@ -12,7 +12,7 @@ require("@rails/ujs").start()
 
 import './channels/**/*_channel.js'
 import "./controllers"
-
+import "chartkick/chart.js"
 import * as bootstrap from "bootstrap"
 
 document.addEventListener("turbo:load", () => {

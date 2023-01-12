@@ -1,2 +1,28 @@
-<h1>Welcome to Jumpstart!</h1>
-<p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
+<h1>Welcome to Ensim Analytics!</h1>
+<p class="lead">Vous pouvez importer votre corpus ci dessous.<br>Si les données sont bien au format conformes ils seront importées et calculer.</p>
+<p class="lead">Vous pouvez configurer les pondérations des reponses a chaques question dans la partie administration</p>
+<div class="action-box">
+    <%= link_to "Upload Corpus", new_data_import_path, class: "bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shado" %>
+</div>
+<br>
+<h3 >Repartition des predictions selons les données deja importées</h3>
+
+<button type="button" class="btn btn-primary">
+  Nombres de Questions <span class="badge text-bg-secondary"><%=Question.count %></span>
+</button>
+
+<button type="button" class="btn btn-success">
+  Nombres d"étudiants <span class="badge text-bg-primary"><%=Student.count - 1%></span>
+</button>
+
+<button type="button" class="btn btn-info">
+  Prediction IPS <span class="badge text-bg-primary"><%=Student.where(predictedPath: "Ips").count%></span>
+</button>
+
+<button type="button" class="btn btn-info">
+  Prediction Astre <span class="badge text-bg-primary"><%=Student.where(predictedPath: "Astre").count%></span>
+</button>
+
+
+
+<%= column_chart Student.group(:predictedPath).count %>
