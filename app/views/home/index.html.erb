@@ -25,4 +25,4 @@
 
 
 
-<%= column_chart Student.group(:predictedPath).count %>
+<%= column_chart Student.where.not(identifier: "ADMIN").group(:predictedPath).count %>

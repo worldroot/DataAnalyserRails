@@ -2,10 +2,10 @@ class QuestionResource < Madmin::Resource
   # Attributes
   attribute :id, form: false
   attribute :title
-  attribute :answer, form: false, index: false
+  attribute :answer, form: false, index: false, show: false
   attribute :created_at, form: false
   attribute :updated_at, form: false
-  attribute :answer_id, form: false, index: false
+  attribute :answer_id, form: false, index: false, show: false
 
   # Associations
   attribute :answers
