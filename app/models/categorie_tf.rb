@@ -1,0 +1,2 @@
+class CategorieTf < ApplicationRecord
+end

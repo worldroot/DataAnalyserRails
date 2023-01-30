@@ -1,12 +1,11 @@
 module Importers
-  class DataImport
+  class TraceforumImport
     include ActiveModel::Model
     require 'roo'
     require 'byebug'
 
     attr_accessor :file, :headers, :success_imported_data
 
-    #REQUIRED_HEADERS = %w[name contact_name email telephone].freeze
 
     def initialize(attributes = {})
       attributes.each { |key, value| send("#{key}=", value) }
@@ -29,29 +28,23 @@ module Importers
       spreadsheet = open_spreadsheet
       @header = spreadsheet.row(1)
 
-      (4..spreadsheet.last_row).map do |i|
+      (2..spreadsheet.last_row).map do |i|
         row = Hash[[@header, spreadsheet.row(i)].transpose]
 
-        byebug
-        if row['identifiant'].nil?
-          errors.add :base, "Row (#{i}) 'identifiant' must be present!"
+        if !row['Attribut'].include?("Forum")
           next
         end
+        # id_forum = row['Attribut'].split(',').first
+        forum = Forum.find_by(id_reference_tf: row['Attribut'].scan(/\d+/).first) || Forum.new
+        forum.id_reference_tf = row['Attribut'].scan(/\d+/).first
+        forum.time_spent += row['Delai'] if !row['Delai'].eql?("NULL")
+        forum.nbr_msgs += 1 if row['Titre'].eql?('Poster un nouveau message')
+        forum.nbr_affich_structure += 1 if row['Titre'].eql?('Afficher une structure (cours/forum)')
+        forum.nbr_affich_msgs += 1 if row['Titre'].eql?("Afficher le contenu d'un message")
+        forum.save
+        forum
 
-        student = Student.find_by(identifier: row['identifiant']) || Student.new
-        student.identifier = row['identifiant']
-        student.scoreAstre = 0
-        student.scoreIps = 0
-        student.save
-        student
 
-        Question.all.each do |q|
-          student_answer = Answer.find_by(description: row[q.title], question: q )
-          student.scoreIps += student_answer.ips_points if !student_answer.nil?
-          student.scoreAstre += student_answer.astre_points if !student_answer.nil?
-        end
-        student.prediction
-        student
 
         
       end
@@ -63,14 +56,14 @@ module Importers
 
     def save
       @success_imported_data = 0
-      load_imported_data.each_with_index do |student, index|
-        if student&.save
+      load_imported_data.each_with_index do |forum, index|
+        if forum&.save
           @success_imported_data += 1
         else
-          next if student.nil?
+          next if forum.nil?
 
-          student.errors.full_messages.each do |msg|
-            errors.add :base, "Row (#{index}) : #{msg}, #{student.name}"
+          forum.errors.full_messages.each do |msg|
+            errors.add :base, "Row (#{index}) : #{msg}, #{forum.id_reference_tf}"
           end
         end
       end

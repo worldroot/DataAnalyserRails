@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_11_232344) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_30_201718) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,6 +42,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_11_232344) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "activite_tfs", force: :cascade do |t|
+    t.string "titre"
+    t.integer "typeAct"
+    t.bigint "categorie_tf_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["categorie_tf_id"], name: "index_activite_tfs_on_categorie_tf_id"
+  end
+
   create_table "announcements", force: :cascade do |t|
     t.datetime "published_at"
     t.string "announcement_type"
@@ -61,6 +70,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_11_232344) do
     t.datetime "updated_at", null: false
     t.index ["question_id"], name: "index_answers_on_question_id"
     t.index ["student_id"], name: "index_answers_on_student_id"
+  end
+
+  create_table "categorie_tfs", force: :cascade do |t|
+    t.string "titre"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "forums", force: :cascade do |t|
+    t.integer "id_reference_tf"
+    t.jsonb "kpis"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
@@ -136,6 +158,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_11_232344) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "activite_tfs", "categorie_tfs"
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "students"
   add_foreign_key "questions", "answers"

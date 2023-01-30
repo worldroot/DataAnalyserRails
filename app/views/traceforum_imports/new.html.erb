@@ -1,0 +1,31 @@
+<div class="row">
+  <br>
+  <div class="col s12 m6 offset-m3">
+    <div class="panel mb-4">
+      <div class="panel-heading">
+        <h4> <%= "Importer la trace Forum"%> </h4>
+      </div>
+      <div class="panel-body">
+        <p class=" lead text-center mb-8 p-4  rounded-xl bg-orange-100">
+          <%= "Veuillez importer un corpus avec en premiere ligne (les headers) , en premiere position Identifiant  suivi des questions ( questions sans leur numero)" %>
+        </p>
+        <p class=" lead text-center mb-8 p-4  rounded-xl bg-orange-100">
+          <%= "Ensuite cliquer sur import et attendez un peu que la magie opére une bare de chargement bleu s'affichera en haut" %>
+        </p>
+        <%= form_with scope: :data_import, url: traceforum_imports_path, class: 'my-4 text-center' do |f| %>
+          <% if @data_import.errors.any? %>
+            <%= pluralize(@data_import.errors.count, "error") %> <%= t('.error') %>
+            <ul>
+              <% @data_import.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+            </ul>
+          <% end %>
+          <%= f.file_field :file, required: true, accept: ".xls,.xlsx" %>
+          <%= f.submit "Import", class: "bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" %>
+        <% end %>
+      </div>
+    </div>
+    <%= link_to t('.back'), root_path %>
+  </div>
+</div>

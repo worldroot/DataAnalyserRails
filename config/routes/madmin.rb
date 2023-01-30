@@ -1,5 +1,8 @@
 # Below are the routes for madmin
 namespace :madmin do
+  resources :forums
+  resources :activite_tfs
+  resources :categorie_tfs
   resources :answers
   resources :students
   resources :questions

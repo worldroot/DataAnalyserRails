@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   draw :madmin
   get '/privacy', to: 'home#privacy'
   get '/terms', to: 'home#terms'
+  get '/index_trace_forum', to: 'home#index_trace_forum'
 authenticate :user, lambda { |u| u.admin? } do
   mount Sidekiq::Web => '/sidekiq'
 
@@ -18,6 +19,7 @@ end
   resources :notifications, only: [:index]
   resources :announcements, only: [:index]
   resources :data_imports, only: %i[new create]
+  resources :traceforum_imports, only: %i[new create]
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
   root to: 'home#index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
