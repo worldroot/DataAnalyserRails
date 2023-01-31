@@ -5,4 +5,39 @@
     <%= link_to "Upload Trace Forum", new_traceforum_import_path, class: "bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shado" %>
 </div>
 <br>
-<h3 >Resultat Trace Forum</h3>
+
+<h3 >Resultat Trace Forum TOP 10 kpi_B Forum le plus attractive</h3>
+<div>
+    <button type="button" class="btn btn-success">
+    Top Forum  1 <span class="badge text-bg-secondary"><%=@top_forums.first.id_reference_tf %> </span>with  <%=@top_forums.first.kpis %>
+    </button>
+    <button type="button" class="btn btn-primary">
+    Top Forum  2 <span class="badge text-bg-secondary"><%=@top_forums.second.id_reference_tf %> </span>with  <%=@top_forums.second.kpis %>
+    </button>
+    <button type="button" class="btn btn-info">
+    Top Forum  3 <span class="badge text-bg-secondary"><%=@top_forums.third.id_reference_tf %> </span>with  <%=@top_forums.third.kpis %>
+    </button>
+</div>
+<br>
+<%= bar_chart Forum.all.limit(10).group(:kpi_b,:id_reference_tf).order('kpi_b DESC').sum(:kpi_b), xtitle: "Score Forum", ytitle: "ID Forum", title: "Forum Le plus Attractive", width: "1200px", height: "900px", download: {filename: "Forum Le plus Attractive", background: "#ffffff"}, dataset: {barThickness: 10}  %>
+<br>
+<h3 >Resultat Trace Forum kpi_d TOP 10 Time spent en secondes par id Forum</h3>
+
+<%= column_chart Forum.all.limit(10).group(:kpi_d, :id_reference_tf).order('forums.kpi_d DESC').sum(:kpi_d),  xtitle: "Time Spent in seconds", ytitle: "ID Forum",  title: "Time spent in seconds by Forum", width: "1200px", height: "800px", download: {filename: "Time spent in seconds by Forum", background: "#ffffff"}, dataset: {barThickness: 10}   %>
+<br>
+<div>
+    <button type="button" class="btn btn-success">
+    Top user  1 <span class="badge text-bg-secondary"><%=@top_users.first.name %> </span>with  <%=@top_users.first.kpis %>
+    </button>
+    <button type="button" class="btn btn-primary">
+    Top user  2 <span class="badge text-bg-secondary"><%=@top_users.second.name %> </span>with  <%=@top_users.second.kpis %>
+    </button>
+    <button type="button" class="btn btn-info">
+    Top user  3 <span class="badge text-bg-secondary"><%=@top_users.third.name %> </span>with  <%=@top_users.third.kpis %>
+    </button>
+</div>
+<br>
+
+<h3 >Resultat Trace Forum kpi_a TOP 10 Utilisateurs contributeur </h3>
+
+<%= column_chart UserForum.all.limit(10).group(:kpi_a, :name).sum(:kpi_a),  xtitle: "User Name", ytitle: "Score User" , width: "1200px", height: "900px", title: "TOP 10 Utilisateurs contributeur", dataset: {borderWidth: 10}, download: {filename: "Utilisateurs contributeur", background: "#ffffff"}, dataset: {barThickness: 10}   %>

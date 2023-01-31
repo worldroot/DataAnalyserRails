@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  nbr_activite: 1
+  kpi_A: 1
+  kpi_B: 1
+  kpi_C: 1
+
+two:
+  name: MyString
+  nbr_activite: 1
+  kpi_A: 1
+  kpi_B: 1
+  kpi_C: 1

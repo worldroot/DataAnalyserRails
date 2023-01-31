@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_30_201718) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_31_182254) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -83,6 +83,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_201718) do
     t.jsonb "kpis"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "kpi_a"
+    t.integer "kpi_b"
+    t.integer "kpi_c"
+    t.float "kpi_D"
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
@@ -138,6 +142,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_201718) do
     t.integer "scoreIps"
     t.integer "scoreAstre"
     t.string "predictedPath"
+  end
+
+  create_table "user_forums", force: :cascade do |t|
+    t.string "name"
+    t.integer "nbr_activite", default: 0
+    t.integer "kpi_a", default: 0
+    t.integer "kpi_b", default: 0
+    t.integer "kpi_c", default: 0
+    t.jsonb "kpis"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
