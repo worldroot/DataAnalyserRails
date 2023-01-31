@@ -77,7 +77,7 @@ module Importers
         forum.nbr_affich_structure += 1 if row['Titre'].eql?('Afficher une structure (cours/forum)')
         forum.nbr_affich_msgs += 1 if row['Titre'].eql?("Afficher le contenu d'un message")
         forum.kpi_a = forum.nbr_affich_msgs
-        forum.kpi_b = forum.nbr_msgs * 0.4 + forum.nbr_affich_msgs * 0.2 + forum.nbr_affich_structure * 0.2
+        forum.kpi_b = forum.nbr_msgs * 0.3 + forum.nbr_affich_msgs * 0.2 + forum.nbr_affich_structure * 0.2 + forum.time_spent * 0.3
         forum.kpi_c = forum.nbr_affich_structure
         forum.kpi_d = forum.time_spent
         forum.save
